@@ -1,5 +1,7 @@
 package domain;
 
+// Represents a variable in the model
+
 public class Variable
 {
 	private String _name;
