@@ -34,4 +34,13 @@ public class Set
 	{
 		return _elements.contains(element);
 	}
+	
+	@Override public String toString()
+	{
+		String elements = "";
+		for(Element element: _elements)
+			elements += (elements.length() > 0 ? ", " : "") + element;
+		
+		return "set " + _name + " := { " + elements + " };";
+	}
 }

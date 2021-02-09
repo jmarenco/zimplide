@@ -46,4 +46,19 @@ public class Model
 	{
 		return _variables;
 	}
+	
+	public Set getSet(String name)
+	{
+		return _sets.stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
+	}
+	
+	public Parameter getParameter(String name)
+	{
+		return _parameters.stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
+	}
+
+	public Variable getVariable(String name)
+	{
+		return _variables.stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
+	}
 }
