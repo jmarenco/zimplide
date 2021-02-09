@@ -11,25 +11,15 @@ public class ZimplParser implements Parser
 		Model ret = new Model();
 		String file = String.join("\n", fileContent);
 		
-		parseSets(ret, file);
-		parseParameters(ret, file);
-		parseVariables(ret, file);
+		ZimplSetParser setParser = new ZimplSetParser(ret, file);
+		setParser.parse();
 		
+		ZimplParameterParser parameterParser = new ZimplParameterParser(ret, file);
+		parameterParser.parse();
+		
+		ZimplVariableParser variableParser = new ZimplVariableParser(ret, file);
+		variableParser.parse();
+
 		return ret;
-	}
-	
-	private void parseSets(Model model, String file)
-	{
-		
-	}
-
-	private void parseParameters(Model model, String file)
-	{
-		
-	}
-
-	private void parseVariables(Model model, String file)
-	{
-		
 	}
 }
