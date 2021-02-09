@@ -32,4 +32,47 @@ public class Tuple
 		
 		return _elements.get(index);
 	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((_domain == null) ? 0 : _domain.hashCode());
+		result = prime * result + ((_elements == null) ? 0 : _elements.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+
+		if (obj == null)
+			return false;
+		
+		if (getClass() != obj.getClass())
+			return false;
+		
+		Tuple other = (Tuple) obj;
+		
+		if (_domain == null)
+		{
+			if (other._domain != null)
+				return false;
+		}
+		else if (!_domain.equals(other._domain))
+			return false;
+		
+		if (_elements == null)
+		{
+			if (other._elements != null)
+				return false;
+		}
+		else if (!_elements.equals(other._elements))
+			return false;
+		
+		return true;
+	}
 }
