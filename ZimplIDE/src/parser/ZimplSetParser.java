@@ -20,12 +20,7 @@ public class ZimplSetParser
 	
 	public void parse()
 	{
-		String literal = "(\"(\\w+)\"|(\\w+))";
-		String literals = "(" + literal + "(\\s*,\\s*" + literal + ")*)?";
-		
-		Pattern complete = Pattern.compile("set\\s+(\\w+)(\\s*:=\\s*\\{\\s*" + literals + "\\s*\\})?\\s*;");
-		Pattern elements = Pattern.compile(literal);
-		
+		Pattern complete = Pattern.compile("set\\s+(\\w+)(\\s*:=\\s*\\{\\s*" + ZimplAuxiliaryParser.literals + "\\s*\\})?\\s*;");
 		Matcher matcher = complete.matcher(_file);
 		
 		while( matcher.find() )
@@ -33,15 +28,8 @@ public class ZimplSetParser
 			Set set = new Set(matcher.group(1).trim());
 			if( matcher.group(3) != null )
 			{
-				Matcher rematcher = elements.matcher(matcher.group(3));
-				
-				while( rematcher.find() )
-				{
-					if( rematcher.group(2) != null)
-						set.add(new Element(rematcher.group(2).trim()));
-					else if( rematcher.group(3) != null)
-						set.add(new Element(rematcher.group(3).trim()));
-				}
+				for(String str: ZimplAuxiliaryParser.parseCommaSeparatedLiterals(matcher.group(3)))
+					set.add(new Element(str));
 			}
 			
 			_model.add(set);
