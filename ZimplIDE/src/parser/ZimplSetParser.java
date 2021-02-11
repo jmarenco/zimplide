@@ -28,7 +28,7 @@ public class ZimplSetParser
 			Set set = new Set(matcher.group(1).trim());
 			if( matcher.group(3) != null )
 			{
-				for(String str: ZimplAuxiliaryParser.parseCommaSeparatedLiterals(matcher.group(3)))
+				for(String str: ZimplAuxiliaryParser.parseLiterals(matcher.group(3)))
 					set.add(new Element(str));
 			}
 			

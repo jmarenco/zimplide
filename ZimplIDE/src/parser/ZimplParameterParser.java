@@ -1,12 +1,13 @@
 package parser;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import domain.Domain;
-import domain.Element;
 import domain.Model;
 import domain.Parameter;
+import domain.Tuple;
 
 public class ZimplParameterParser
 {
@@ -22,34 +23,32 @@ public class ZimplParameterParser
 	public void parse()
 	{
 		String literals = ZimplAuxiliaryParser.literals;
-		String value = "(<" + literals + ">)?\\s*(\\d+)";
-		String values = "(" + value + "(\\s*,\\s*" + value + ")*)?";
+		String values = ZimplAuxiliaryParser.values;
 		
 		Pattern complete = Pattern.compile("param\\s+(\\w+)(\\[(" + literals + ")\\])?(\\s*:=\\s*" + values + "\\s*)?\\s*;");
 		Matcher matcher = complete.matcher(_file);
 		
 		while( matcher.find() )
 		{
-			String name = matcher.group(1).trim();
 			Domain domain = new Domain();
+
+			if( matcher.group(3) != null)
+			{
+				for(String str: ZimplAuxiliaryParser.parseLiterals(matcher.group(3)))
+					domain.addSet(_model.getSet(str));
+			}
 			
-			for(int i=0; i<=matcher.groupCount(); ++i)
-				System.out.println(i + " - " + matcher.group(i));
+			if( matcher.group(13) != null )
+			{
+				Map<Tuple, Double> valueMap = ZimplAuxiliaryParser.parseValues(domain, matcher.group(13));
+				Parameter param = new Parameter(matcher.group(1).trim(), domain, valueMap);
+				_model.add(param);
+			}
+			else
+			{
+				Parameter param = new Parameter(matcher.group(1).trim(), domain);
+				_model.add(param);
+			}
 			
-			Parameter param = new Parameter(name, domain);
-//			if( matcher.group(3) != null )
-//			{
-//				Matcher rematcher = elements.matcher(matcher.group(3));
-//				
-//				while( rematcher.find() )
-//				{
-//					if( rematcher.group(2) != null)
-//						set.add(new Element(rematcher.group(2).trim()));
-//					else if( rematcher.group(3) != null)
-//						set.add(new Element(rematcher.group(3).trim()));
-//				}
-//			}
-			
-			_model.add(param);
 		}
 	}}

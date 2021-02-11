@@ -17,6 +17,13 @@ public class Parameter
 		_domain = domain;
 		_values = new HashMap<Tuple, Double>();
 	}
+
+	public Parameter(String name, Domain domain, Map<Tuple, Double> values)
+	{
+		_name = name;
+		_domain = domain;
+		_values = values;
+	}
 	
 	public String getName()
 	{

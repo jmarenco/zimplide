@@ -15,6 +15,9 @@ public class Domain
 
 	public void addSet(Set set)
 	{
+		if( set == null )
+			throw new IllegalArgumentException("A null set was added to a parameter");
+
 		_sets.add(set);
 	}
 	

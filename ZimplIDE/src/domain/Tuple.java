@@ -12,6 +12,10 @@ public class Tuple
 	public Tuple(Domain domain)
 	{
 		_domain = domain;
+		_elements = new ArrayList<Element>(domain.size());
+		
+		for(int i=0; i<domain.size(); ++i)
+			_elements.add(null);
 	}
 	
 	public void set(int index, Element element)
