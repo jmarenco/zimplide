@@ -35,6 +35,11 @@ public class Set
 		return _elements.contains(element);
 	}
 	
+	public ArrayList<Element> getElements()
+	{
+		return _elements;
+	}
+	
 	@Override public String toString()
 	{
 		String elements = "";
