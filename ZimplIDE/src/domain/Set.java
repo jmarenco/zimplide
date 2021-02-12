@@ -20,6 +20,11 @@ public class Set
 		return _name;
 	}
 	
+	public void clear()
+	{
+		_elements.clear();
+	}
+	
 	public void add(Element element)
 	{
 		_elements.add(element);
