@@ -23,5 +23,4 @@ public class PanelUtils
 		panel.add(rightPanel, BorderLayout.EAST);
 		panel.add(bottomPanel, BorderLayout.SOUTH);
 	}
-
 }
