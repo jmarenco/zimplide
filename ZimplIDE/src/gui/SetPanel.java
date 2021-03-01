@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import domain.Element;
 import domain.Set;
 
-public class SetPanel extends JPanel
+public class SetPanel extends JPanel implements DataPanel
 {
 	// Serial version
 	private static final long serialVersionUID = 1L;
@@ -83,7 +83,7 @@ public class SetPanel extends JPanel
 		_tableModel.removeRow(_table.getSelectedRow());
 	}
 	
-	public void updateSet()
+	public void updateData()
 	{
 		_set.clear();
 		
