@@ -89,5 +89,7 @@ public class SetPanel extends JPanel implements DataPanel
 		
 		for(int i=0; i<_tableModel.getRowCount(); ++i)
 			_set.add(new Element((String)_tableModel.getValueAt(i, 0)));
+		
+		System.out.println(_set);
 	}
 }
