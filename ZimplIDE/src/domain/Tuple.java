@@ -88,8 +88,12 @@ public class Tuple
 	@Override public String toString()
 	{
 		String elements = "";
-		for(Element element: _elements)
-			elements += (elements.length() > 0 ? ", " : "") + element;
+		
+		for(int i=0; i<_domain.size(); ++i)
+		{
+			String delimiter = _domain.get(i).isNumeric() ? "" : "\"";
+			elements += (elements.length() > 0 ? ", " : "") + delimiter + _elements.get(i).toString() + delimiter;
+		}
 		
 		return "<" + elements + ">";
 	}	
