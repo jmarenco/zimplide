@@ -92,12 +92,34 @@ class ZimplParameterParserTest
 		assertValue("x", 12, "shrek", "11");
 	}
 	
+	@Test
+	void fillEmptyParam()
+	{
+		Domain domain = new Domain();
+		domain.addSet(_model.getSet("A"));
+		
+		Parameter param = new Parameter("cost", domain);
+		param.setValue(new Tuple(domain, "shrek"), 11);
+		param.setValue(new Tuple(domain, "fiona"), 12);
+		
+		_model.add(param);
+		
+		String result = fill("stuff param cost[A]; more stuff");
+		assertEquals("stuff param cost[A] := <\"shrek\"> 11.0, <\"fiona\"> 12.0; more stuff", result);
+	}
+
 	private void parse(String file)
 	{
 		ZimplParameterParser parser = new ZimplParameterParser(_model, file);
 		parser.parse();
-	}	
+	}
 	
+	private String fill(String file)
+	{
+		ZimplParameterParser parser = new ZimplParameterParser(_model, file);
+		return parser.fill();
+	}
+
 	private void assertContains(String... params)
 	{
 		assertEquals(params.length, _model.getParameters().size());

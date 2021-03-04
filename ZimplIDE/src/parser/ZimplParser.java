@@ -31,6 +31,9 @@ public class ZimplParser implements Parser
 		ZimplSetParser setParser = new ZimplSetParser(model, file);
 		file = setParser.fill();		
 		
+		ZimplParameterParser parameterParser = new ZimplParameterParser(model, file);
+		file = parameterParser.fill();
+		
 		return Arrays.asList(file.split("\n"));
 	}	
 }

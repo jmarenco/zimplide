@@ -51,4 +51,20 @@ public class ZimplParameterParser
 			}
 			
 		}
-	}}
+	}
+	
+	public String fill()
+	{
+		String ret = _file;
+		for(Parameter parameter: _model.getParameters())
+		{
+			String literals = ZimplAuxiliaryParser.literals;
+			String values = ZimplAuxiliaryParser.values;
+			String regex = "param\\s+" + parameter.getName() + "(\\[(" + literals + ")\\])?(\\s*:=\\s*" + values + "\\s*)?\\s*;";
+			
+			ret = ret.replaceAll(regex, parameter.toString());
+		}
+		
+		return ret;
+	}
+}
