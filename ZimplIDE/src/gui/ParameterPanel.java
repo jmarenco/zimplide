@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -52,6 +54,9 @@ public class ParameterPanel extends JPanel implements DataPanel
 		_table.setModel(_tableModel);
 		_table.setBounds(30,40,200,300);
 		
+		for(int i=0; i<_domain.size(); ++i)
+			_table.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(setCombo(_domain.get(i))));
+
 		JScrollPane sp = new JScrollPane(_table);    
 		add(sp, BorderLayout.CENTER);
 		
@@ -68,6 +73,16 @@ public class ParameterPanel extends JPanel implements DataPanel
 			ret[i] = tuple.get(i).toString();
 		
 		ret[tuple.size()] = Double.toString(value);
+		return ret;
+	}
+	
+	private JComboBox<String> setCombo(Set set)
+	{
+		JComboBox<String> ret = new JComboBox<String>();
+		
+		for(Element element: set.getElements())
+			ret.addItem(element.toString());
+		
 		return ret;
 	}
 	
