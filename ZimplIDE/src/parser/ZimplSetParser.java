@@ -35,4 +35,16 @@ public class ZimplSetParser
 			_model.add(set);
 		}
 	}
+	
+	public String fill()
+	{
+		String ret = _file;
+		for(Set set: _model.getSets())
+		{
+			String regex = "set\\s+" + set.getName() + "(\\s*:=\\s*\\{\\s*" + ZimplAuxiliaryParser.literals + "\\s*\\})?\\s*;";
+			ret = ret.replaceAll(regex, set.toString());
+		}
+		
+		return ret;
+	}
 }

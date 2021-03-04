@@ -12,11 +12,14 @@ public class Set
 	private ArrayList<Element> _elements;
 	private Boolean _isNumeric; // Cache
 	
-	public Set(String name)
+	public Set(String name, String ...elements)
 	{
 		_name = name;
 		_elements = new ArrayList<Element>();
 		_isNumeric = null;
+		
+		for(String string: elements)
+			add(string);
 	}
 	
 	public String getName()

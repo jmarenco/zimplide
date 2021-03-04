@@ -120,12 +120,26 @@ class ZimplSetParserTest
 		assertContent("B", "4", "5");
 	}
 	
+	@Test
+	void fillEmptySet()
+	{
+		_model.add(new Set("A", "3", "4", "7"));
+		String result = fill("stuff set A; more stuff");
+		assertEquals("stuff set A := { 3, 4, 7 }; more stuff", result);
+	}
+
 	private void parse(String file)
 	{
 		ZimplSetParser parser = new ZimplSetParser(_model, file);
 		parser.parse();
 	}
 	
+	private String fill(String file)
+	{
+		ZimplSetParser parser = new ZimplSetParser(_model, file);
+		return parser.fill();
+	}
+
 	private void assertContains(String... sets)
 	{
 		assertEquals(sets.length, _model.getSets().size());
