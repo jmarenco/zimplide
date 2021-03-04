@@ -9,13 +9,18 @@ public class Tuple
 	private Domain _domain;
 	private ArrayList<Element> _elements;
 	
-	public Tuple(Domain domain)
+	public Tuple(Domain domain, String ...values)
 	{
 		_domain = domain;
 		_elements = new ArrayList<Element>(domain.size());
 		
 		for(int i=0; i<domain.size(); ++i)
-			_elements.add(null);
+			_elements.add(i < values.length ? new Element(values[i]) : null);
+	}
+	
+	public int size()
+	{
+		return _elements.size();
 	}
 	
 	public void set(int index, Element element)
@@ -79,4 +84,13 @@ public class Tuple
 		
 		return true;
 	}
+	
+	@Override public String toString()
+	{
+		String elements = "";
+		for(Element element: _elements)
+			elements += (elements.length() > 0 ? ", " : "") + element;
+		
+		return "<" + elements + ">";
+	}	
 }

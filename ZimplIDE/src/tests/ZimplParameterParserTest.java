@@ -118,7 +118,7 @@ class ZimplParameterParserTest
 	private void assertValues(String name, int elements)
 	{
 		Parameter param = _model.getParameter(name);
-		assertEquals(elements, param.getTuples().size());
+		assertEquals(elements, param.getDomainTuples().size());
 	}
 	
 	

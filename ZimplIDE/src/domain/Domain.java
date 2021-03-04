@@ -33,4 +33,18 @@ public class Domain
 		
 		return _sets.get(index);
 	}
+	
+	public ArrayList<Set> sets()
+	{
+		return _sets;
+	}
+	
+	@Override public String toString()
+	{
+		String elements = "";
+		for(Set set: _sets)
+			elements += (elements.length() > 0 ? "*" : "") + set.getName();
+		
+		return "[" + elements + "]";
+	}	
 }

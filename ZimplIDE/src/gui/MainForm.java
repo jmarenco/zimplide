@@ -4,7 +4,7 @@ import domain.*;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.*;
 
 public class MainForm
 {
@@ -17,6 +17,7 @@ public class MainForm
 		tabs.addTab(model.getSet("A"));
 		tabs.addTab(model.getSet("B"));
 		tabs.addTab(model.getSet("C"));
+		tabs.addTab(model.getParameter("cost"));
 		
 	    JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 800, 500);
@@ -29,8 +30,8 @@ public class MainForm
 	{
 		try
 		{
-			FlatLightLaf.install();
-			UIManager.setLookAndFeel(new FlatLightLaf());
+			FlatIntelliJLaf.install();
+			UIManager.setLookAndFeel(new FlatIntelliJLaf());
 		}
 		catch(Exception e)
 		{
@@ -63,9 +64,19 @@ public class MainForm
 		C.add(new Element("calvin"));
 		C.add(new Element("hobbes"));
 		
+		Domain domain = new Domain();
+		domain.addSet(A);
+		domain.addSet(B);
+		
+		Parameter parameter = new Parameter("cost", domain);
+		parameter.setValue(new Tuple(domain, "pepe", "cat"), 4.5);
+		parameter.setValue(new Tuple(domain, "pepe", "hat"), 4.6);
+		parameter.setValue(new Tuple(domain, "pipi", "cat"), 4.7);
+		
 		model.add(A);
 		model.add(B);
 		model.add(C);
+		model.add(parameter);
 		
 		return model;
 	}
