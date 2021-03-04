@@ -4,6 +4,8 @@ import domain.*;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 public class MainForm
 {
 	public MainForm()
@@ -27,7 +29,8 @@ public class MainForm
 	{
 		try
 		{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			FlatLightLaf.install();
+			UIManager.setLookAndFeel(new FlatLightLaf());
 		}
 		catch(Exception e)
 		{
