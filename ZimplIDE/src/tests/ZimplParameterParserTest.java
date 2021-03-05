@@ -143,7 +143,6 @@ class ZimplParameterParserTest
 		assertEquals(elements, param.getDomainTuples().size());
 	}
 	
-	
 	private void assertValue(String name, double value, String... domainValues)
 	{
 		Parameter param = _model.getParameter(name);
