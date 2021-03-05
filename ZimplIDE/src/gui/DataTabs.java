@@ -8,6 +8,7 @@ import javax.swing.event.ChangeEvent;
 
 import domain.Parameter;
 import domain.Set;
+import domain.Variable;
 
 public class DataTabs extends JPanel
 {
@@ -40,6 +41,11 @@ public class DataTabs extends JPanel
 	{
 		ParameterPanel parameterPanel = new ParameterPanel(parameter);
 		_tabbedPane.addTab(parameter.getName(), parameterPanel);
+	}
+	public void addTab(Variable variable)
+	{
+		VariablePanel variablePanel = new VariablePanel(variable);
+		_tabbedPane.addTab(variable.getName(), variablePanel);
 	}
 	
 	// Fires when tab is changed

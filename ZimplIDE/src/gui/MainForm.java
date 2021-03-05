@@ -10,18 +10,11 @@ public class MainForm
 {
 	public MainForm()
 	{
-		Model model = sampleModel();
 		setLookAndFeel();
-		
-		DataTabs tabs = new DataTabs();
-		tabs.addTab(model.getSet("A"));
-		tabs.addTab(model.getSet("B"));
-		tabs.addTab(model.getSet("C"));
-		tabs.addTab(model.getParameter("cost"));
 		
 	    JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 800, 500);
-		frame.getContentPane().add(tabs);
+		frame.getContentPane().add(new ModelPanel(sampleModel()));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
@@ -73,10 +66,13 @@ public class MainForm
 		parameter.setValue(new Tuple(domain, "pepe", "hat"), 4.6);
 		parameter.setValue(new Tuple(domain, "pipi", "cat"), 4.7);
 		
+		Variable variable = new Variable("x", domain);
+		
 		model.add(A);
 		model.add(B);
 		model.add(C);
 		model.add(parameter);
+		model.add(variable);
 		
 		return model;
 	}

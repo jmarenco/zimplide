@@ -40,40 +40,20 @@ public class ParameterPanel extends JPanel implements DataPanel
 		
 		_parameter = parameter;
 		_domain = parameter.getDomain();
-		_tableModel = new DefaultTableModel();
-		
-		for(Set set: _domain.sets())
-			_tableModel.addColumn(set.getName());
-		
-		_tableModel.addColumn(parameter.getName());
-		
-		for(Tuple tuple: _parameter.getDomainTuples())
-			_tableModel.addRow(stringArray(tuple, _parameter.getValue(tuple)));
-		
+
 		_table = new JTable();
-		_table.setModel(_tableModel);
 		_table.setBounds(30,40,200,300);
+		
+		updateControl();
+		createPopup();
 		
 		for(int i=0; i<_domain.size(); ++i)
 			_table.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(setCombo(_domain.get(i))));
 
 		JScrollPane sp = new JScrollPane(_table);    
 		add(sp, BorderLayout.CENTER);
-		
-		createPopup();
-		
+
 		new ExcelAdapter(_table);
-	}
-	
-	private String[] stringArray(Tuple tuple, double value)
-	{
-		String[] ret = new String[tuple.size() + 1];
-		
-		for(int i=0; i<tuple.size(); ++i)
-			ret[i] = tuple.get(i).toString();
-		
-		ret[tuple.size()] = Double.toString(value);
-		return ret;
 	}
 	
 	private JComboBox<String> setCombo(Set set)
@@ -131,7 +111,20 @@ public class ParameterPanel extends JPanel implements DataPanel
 			
 			_parameter.setValue(tuple, Aux.toDouble((String)_tableModel.getValueAt(i, _domain.size())));
 		}
+	}
+
+	public void updateControl()
+	{
+		_tableModel = new DefaultTableModel();
 		
-		System.out.println(_parameter);
+		for(Set set: _domain.sets())
+			_tableModel.addColumn(set.getName());
+		
+		_tableModel.addColumn(_parameter.getName());
+		
+		for(Tuple tuple: _parameter.getDomainTuples())
+			_tableModel.addRow(Aux.stringArray(tuple, _parameter.getValue(tuple)));
+		
+		_table.setModel(_tableModel);
 	}
 }

@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 // Represents a variable in the model
@@ -14,6 +15,7 @@ public class Variable
 	{
 		_name = name;
 		_domain = domain;
+		_values = new HashMap<Tuple, Double>();
 	}
 	
 	public String getName()
@@ -36,7 +38,7 @@ public class Variable
 		return _values.get(tuple);
 	}
 	
-	public java.util.Set<Tuple> getTuples()
+	public java.util.Set<Tuple> getDomainTuples()
 	{
 		return _values.keySet();
 	}

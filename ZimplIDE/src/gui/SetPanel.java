@@ -33,19 +33,13 @@ public class SetPanel extends JPanel implements DataPanel
 		PanelUtils.addMargins(this);
 		
 		_set = set;
-		_tableModel = new DefaultTableModel();
-		_tableModel.addColumn(_set.getName());
-		
-		for(Element element: _set.getElements())
-			_tableModel.addRow(new String[] { element.toString() });
-		
 		_table = new JTable();
-		_table.setModel(_tableModel);
 		_table.setBounds(30,40,200,300);
 		
 		JScrollPane sp = new JScrollPane(_table);    
 		add(sp, BorderLayout.CENTER);
 		
+		updateControl();
 		createPopup();
 		
 		new ExcelAdapter(_table);
@@ -89,7 +83,16 @@ public class SetPanel extends JPanel implements DataPanel
 		
 		for(int i=0; i<_tableModel.getRowCount(); ++i)
 			_set.add(new Element((String)_tableModel.getValueAt(i, 0)));
+	}
+
+	public void updateControl()
+	{
+		_tableModel = new DefaultTableModel();
+		_tableModel.addColumn(_set.getName());
 		
-		System.out.println(_set);
+		for(Element element: _set.getElements())
+			_tableModel.addRow(new String[] { element.toString() });
+		
+		_table.setModel(_tableModel);
 	}
 }
