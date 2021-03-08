@@ -1,27 +1,34 @@
 package gui;
 
-import domain.*;
+import process.ModelFile;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.formdev.flatlaf.*;
 
 public class MainForm
 {
+	private JFrame _frame;
+	private ModelPanel _modelPanel;
+	private ModelFile _zimplFile;
+	
 	public MainForm()
 	{
 		setLookAndFeel();
 		
-	    JFrame frame = new JFrame();
-		frame.setBounds(100, 100, 800, 500);
-		frame.setJMenuBar(createMenuBar());
-		frame.getContentPane().add(new ModelPanel(sampleModel()));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+	    _frame = new JFrame();
+		_frame.setBounds(100, 100, 800, 500);
+		_frame.setJMenuBar(createMenuBar());
+		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame.setVisible(true);
+		
+		updateTitle();
 	}
 	
 	private void setLookAndFeel()
@@ -72,17 +79,41 @@ public class MainForm
 	
 	private void open()
 	{
-		
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Zimpl models", "zpl");
+        chooser.setFileFilter(filter);
+
+        if( chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION )
+        {
+        	if( _modelPanel != null )
+        		_frame.getContentPane().remove(_modelPanel);
+        	
+        	_zimplFile = new ModelFile(chooser.getSelectedFile().getPath());
+        	_modelPanel = new ModelPanel(_zimplFile.getModel());
+        	
+        	_frame.getContentPane().add(_modelPanel);
+
+        	updateTitle();
+        }
 	}
 	
 	private void save()
 	{
-		
+		if( _zimplFile != null )
+			_zimplFile.write();
 	}
 	
 	private void saveAs()
 	{
-		
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Zimpl models", "zpl");
+        chooser.setFileFilter(filter);
+
+        if( _zimplFile != null && chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION )
+        {
+        	_zimplFile.write(chooser.getSelectedFile().getPath());
+        	updateTitle();
+        }
 	}
 	
 	private void solve()
@@ -90,48 +121,13 @@ public class MainForm
 		
 	}
 	
+	private void updateTitle()
+	{
+    	_frame.setTitle("ZimplIDE 0.01" + (_zimplFile != null ? " - " + _zimplFile.getFileName() : ""));
+	}
+	
 	public static void main(String[] args)
 	{
 		new MainForm();
-	}
-	
-	private static Model sampleModel()
-	{
-		Model model = new Model();
-		
-		Set A = new Set("A");
-		Set B = new Set("B");
-		Set C = new Set("C");
-
-		A.add(new Element("pepe"));
-		A.add(new Element("papa"));
-		A.add(new Element("pipi"));
-		
-		B.add(new Element("cat"));
-		B.add(new Element("bat"));
-		B.add(new Element("rat"));
-		B.add(new Element("hat"));
-
-		C.add(new Element("calvin"));
-		C.add(new Element("hobbes"));
-		
-		Domain domain = new Domain();
-		domain.addSet(A);
-		domain.addSet(B);
-		
-		Parameter parameter = new Parameter("cost", domain);
-		parameter.setValue(new Tuple(domain, "pepe", "cat"), 4.5);
-		parameter.setValue(new Tuple(domain, "pepe", "hat"), 4.6);
-		parameter.setValue(new Tuple(domain, "pipi", "cat"), 4.7);
-		
-		Variable variable = new Variable("x", domain);
-		
-		model.add(A);
-		model.add(B);
-		model.add(C);
-		model.add(parameter);
-		model.add(variable);
-		
-		return model;
 	}
 }
