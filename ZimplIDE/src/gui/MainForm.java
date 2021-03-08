@@ -1,7 +1,11 @@
 package gui;
 
 import domain.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.*;
@@ -14,6 +18,7 @@ public class MainForm
 		
 	    JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 800, 500);
+		frame.setJMenuBar(createMenuBar());
 		frame.getContentPane().add(new ModelPanel(sampleModel()));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -30,6 +35,59 @@ public class MainForm
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private JMenuBar createMenuBar()
+	{
+		// https://iconarchive.com
+		JMenuBar menuBar = new JMenuBar();
+
+		JButton openBtn = new JButton("Open");
+		openBtn.setIcon(new ImageIcon("assets/open-icon.png"));
+		openBtn.addActionListener(t -> open());
+		openBtn.setFocusable(false);
+
+		JButton saveBtn = new JButton("Save");
+		saveBtn.setIcon(new ImageIcon("assets/save-icon.png"));
+		saveBtn.addActionListener(t -> save());
+		saveBtn.setFocusable(false);
+
+		JButton saveAsBtn = new JButton("Save as");
+		saveAsBtn.setIcon(new ImageIcon("assets/saveas-icon.png"));
+		saveAsBtn.addActionListener(t -> saveAs());
+		saveAsBtn.setFocusable(false);
+
+		JButton solveBtn = new JButton("Solve");
+		solveBtn.setIcon(new ImageIcon("assets/solve-icon.png"));
+		solveBtn.addActionListener(t -> solve());
+		solveBtn.setFocusable(false);
+
+		menuBar.add(openBtn);
+		menuBar.add(saveBtn);
+		menuBar.add(saveAsBtn);
+		menuBar.add(solveBtn);
+		
+		return menuBar;
+	}
+	
+	private void open()
+	{
+		
+	}
+	
+	private void save()
+	{
+		
+	}
+	
+	private void saveAs()
+	{
+		
+	}
+	
+	private void solve()
+	{
+		
 	}
 	
 	public static void main(String[] args)
