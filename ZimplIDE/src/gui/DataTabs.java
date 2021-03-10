@@ -31,6 +31,12 @@ public class DataTabs extends JPanel
 		add(_tabbedPane, BorderLayout.CENTER);
 	}
 	
+	// Clears all data tabs
+	public void clear()
+	{
+		_tabbedPane.removeAll();
+	}
+	
 	// Adds a new data tab
 	public void addTab(Set set)
 	{

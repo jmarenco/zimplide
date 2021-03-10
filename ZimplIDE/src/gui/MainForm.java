@@ -2,6 +2,8 @@ package gui;
 
 import process.ModelFile;
 
+import java.awt.BorderLayout;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -28,7 +30,10 @@ public class MainForm
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_frame.setVisible(true);
 		
-		updateTitle();
+    	_modelPanel = new ModelPanel();
+    	_frame.getContentPane().add(_modelPanel, BorderLayout.CENTER);
+
+    	updateTitle();
 	}
 	
 	private void setLookAndFeel()
@@ -85,15 +90,11 @@ public class MainForm
 
         if( chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION )
         {
-        	if( _modelPanel != null )
-        		_frame.getContentPane().remove(_modelPanel);
-        	
         	_zimplFile = new ModelFile(chooser.getSelectedFile().getPath());
-        	_modelPanel = new ModelPanel(_zimplFile.getModel());
-        	
-        	_frame.getContentPane().add(_modelPanel);
+        	_modelPanel.setModel(_zimplFile.getModel());
 
         	updateTitle();
+        	_frame.invalidate();
         }
 	}
 	

@@ -21,15 +21,19 @@ public class ModelPanel  extends JPanel
 	private DataTabs _dataTabs;
 
 	// Constructor
-	public ModelPanel(Model model)
+	public ModelPanel()
 	{
 		super(new BorderLayout());
 		PanelUtils.addMargins(this);
 		
-		_model = model;
 		_dataTabs = new DataTabs();
-		
 		add(_dataTabs, BorderLayout.CENTER);
+	}
+	
+	public void setModel(Model model)
+	{
+		_model = model;
+		_dataTabs.clear();
 		
 		for(Set set: _model.getSets())
 			_dataTabs.addTab(set);
