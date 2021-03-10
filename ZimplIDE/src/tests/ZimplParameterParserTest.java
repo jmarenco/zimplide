@@ -70,7 +70,7 @@ class ZimplParameterParserTest
 	@Test
 	void singleDomainParam()
 	{
-		parse("stuff param x[A] := <shrek> 10, <fiona> 1; more stuff");
+		parse("stuff param x[A] := <\"shrek\"> 10, <fiona> 1; more stuff");
 
 		assertContains("x");
 		assertDomain("x", "A");
@@ -82,7 +82,7 @@ class ZimplParameterParserTest
 	@Test
 	void twoDomainNoSpacedParam()
 	{
-		parse("stuff param x[A*B]:=<shrek,10> 13, <fiona,10> 1,<shrek,11>12; more stuff");
+		parse("stuff param x[A*B]:=<\"shrek\",10> 13, <\"fiona\",10> 1,<\"shrek\",11>12; more stuff");
 
 		assertContains("x");
 		assertDomain("x", "A", "B");
@@ -92,6 +92,30 @@ class ZimplParameterParserTest
 		assertValue("x", 12, "shrek", "11");
 	}
 	
+	@Test
+	void decimalValuesInParam()
+	{
+		parse("stuff param x[A] := <\"shrek\"> 10.1, <fiona> 1.0; more stuff");
+
+		assertContains("x");
+		assertDomain("x", "A");
+		assertValues("x", 2);
+		assertValue("x", 10.1, "shrek");
+		assertValue("x", 1, "fiona");
+	}
+	
+	@Test
+	void negativeValuesInParam()
+	{
+		parse("stuff param x[A] := <\"shrek\"> -10.1, <fiona> -1.0; more stuff");
+
+		assertContains("x");
+		assertDomain("x", "A");
+		assertValues("x", 2);
+		assertValue("x", -10.1, "shrek");
+		assertValue("x", -1, "fiona");
+	}
+
 	@Test
 	void fillEmptyParam()
 	{
@@ -105,7 +129,8 @@ class ZimplParameterParserTest
 		_model.add(param);
 		
 		String result = fill("stuff param cost[A]; more stuff");
-		assertEquals("stuff param cost[A] := <\"shrek\"> 11.0, <\"fiona\"> 12.0; more stuff", result);
+		assertTrue(result.equals("stuff param cost[A] := <\"fiona\"> 12.0, <\"shrek\"> 11.0; more stuff") ||
+				   result.equals("stuff param cost[A] := <\"shrek\"> 11.0, <\"fiona\"> 12.0; more stuff"));
 	}
 
 	private void parse(String file)

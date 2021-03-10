@@ -14,7 +14,7 @@ public class ZimplAuxiliaryParser
 {
 	public static String literal = "(\"(\\w+)\"|(\\w+))";
 	public static String literals = "(" + literal + "(\\s*[,\\*]\\s*" + literal + ")*)?";
-	public static String value = "(<(" + literals + ")>)?\\s*(\\d+)";
+	public static String value = "(<(" + literals + ")>)?\\s*(-?\\d+(\\.\\d*)?)";
 	public static String values = "(" + value + "(\\s*,\\s*" + value + ")*)?";
 	
 	private static Pattern literalMatcher = null;
