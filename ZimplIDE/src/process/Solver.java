@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
-public class Solver
+public class Solver implements Runnable
 {
 	private ModelFile _modelFile;
 	private ArrayList<String> _output;
@@ -18,12 +18,23 @@ public class Solver
 	// Path to SCIP executable
 	private static String _scip = "/home/jmarenco/scipopt/bin/scip";
 	
-	public Solver(ModelFile modelFile)
+	// Interface for object containing logging method
+	public static interface Logger
 	{
-		_modelFile = modelFile;
+		void log(String str);
 	}
 	
-	public void solve()
+	// Logger
+	private Logger _logger;
+	
+	public Solver(ModelFile modelFile, Logger logger)
+	{
+		_modelFile = modelFile;
+		_logger = logger;
+	}
+	
+	@Override
+	public void run()
 	{
 		try
 		{
@@ -56,11 +67,17 @@ public class Solver
 
 		String line = "";
 		while ((line = input.readLine()) != null)
+		{
 			_output.add(line);
+			_logger.log(line);
+		}
 			
 		while ((line = errors.readLine()) != null)
+		{
 			_errors.add(line);
-		
+			_logger.log(line);
+		}
+
 		input.close();
 		errors.close();
 	}

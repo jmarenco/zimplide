@@ -111,6 +111,8 @@ public class ParameterPanel extends JPanel implements DataPanel
 			
 			_parameter.setValue(tuple, Aux.toDouble((String)_tableModel.getValueAt(i, _domain.size())));
 		}
+		
+		System.out.println(_parameter);
 	}
 
 	public void updateControl()

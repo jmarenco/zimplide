@@ -1,7 +1,6 @@
 package gui;
 
 import process.ModelFile;
-import process.Solver;
 
 import java.awt.BorderLayout;
 
@@ -139,14 +138,8 @@ public class MainForm
 	{
 		_modelPanel.updateCurrentTab();
 		
-		Solver solver = new Solver(_zimplFile);
-		solver.solve();
-		
-		for(String str: solver.getOutput())
-			System.out.println(str);
-
-		for(String str: solver.getErrors())
-			System.out.println(str);
+		SolverForm solverForm = new SolverForm(_zimplFile);
+		solverForm.solve();
 	}
 	
 	private void updateTitle()
