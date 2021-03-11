@@ -57,10 +57,15 @@ public class DataTabs extends JPanel
 	// Fires when tab is changed
 	public void tabChanged(ChangeEvent e)
 	{
-		if (_selectedPanel != null)
-			_selectedPanel.updateData();
+		updateCurrentTab();
 		
-		if (_tabbedPane.getSelectedComponent() instanceof DataPanel)
+		if( _tabbedPane.getSelectedComponent() instanceof DataPanel )
 			_selectedPanel = ((DataPanel)_tabbedPane.getSelectedComponent());
+	}
+	
+	public void updateCurrentTab()
+	{
+		if( _selectedPanel != null )
+			_selectedPanel.updateData();
 	}
 }

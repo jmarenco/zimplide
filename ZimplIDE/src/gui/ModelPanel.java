@@ -44,4 +44,9 @@ public class ModelPanel  extends JPanel
 		for(Variable variable: _model.getVariables())
 			_dataTabs.addTab(variable);
 	}
+	
+	public void updateCurrentTab()
+	{
+		_dataTabs.updateCurrentTab();
+	}
 }

@@ -74,6 +74,13 @@ public class MainForm
 		solveBtn.setIcon(new ImageIcon("assets/solve-icon.png"));
 		solveBtn.addActionListener(t -> solve());
 		solveBtn.setFocusable(false);
+		
+		// For faster testing
+		JButton dietBtn = new JButton("Diet test");
+		dietBtn.setIcon(new ImageIcon("assets/open-icon.png"));
+		dietBtn.addActionListener(t -> dietTest());
+		dietBtn.setFocusable(false);
+		menuBar.add(dietBtn);
 
 		menuBar.add(openBtn);
 		menuBar.add(saveBtn);
@@ -83,16 +90,23 @@ public class MainForm
 		return menuBar;
 	}
 	
+	private void dietTest()
+	{
+    	_zimplFile = new ModelFile("/home/jmarenco/git/zimplide/ZimplIDE/examples/diet.zpl");
+    	_modelPanel.setModel(_zimplFile.getModel());
+
+    	updateTitle();
+	}
+	
 	private void open()
 	{
-//        JFileChooser chooser = new JFileChooser();
-//        FileNameExtensionFilter filter = new FileNameExtensionFilter("Zimpl models", "zpl");
-//        chooser.setFileFilter(filter);
-//
-//        if( chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION )
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Zimpl models", "zpl");
+        chooser.setFileFilter(filter);
+
+        if( chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION )
         {
-//        	String file = chooser.getSelectedFile().getPath();
-        	String file = "/home/jmarenco/git/zimplide/ZimplIDE/examples/diet.zpl";
+        	String file = chooser.getSelectedFile().getPath();
         	
         	_zimplFile = new ModelFile(file);
         	_modelPanel.setModel(_zimplFile.getModel());
@@ -123,7 +137,7 @@ public class MainForm
 	
 	private void solve()
 	{
-		// TODO: Update data from current tab
+		_modelPanel.updateCurrentTab();
 		
 		Solver solver = new Solver(_zimplFile);
 		solver.solve();
