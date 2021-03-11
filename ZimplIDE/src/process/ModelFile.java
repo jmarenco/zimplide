@@ -29,11 +29,16 @@ public class ModelFile
 	
 	public void write(String fileName)
 	{
+		writeTemporal(fileName);
+		_fileName = fileName;
+	}
+
+	public void writeTemporal(String fileName)
+	{
 		List<String> lines = _parser.fill(_textFile.getLines(), _model);
 		
 		_textFile = new TextFile(lines);
 		_textFile.write(fileName);
-		_fileName = fileName;
 	}
 	
 	public Model getModel()

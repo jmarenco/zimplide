@@ -61,6 +61,6 @@ public class Parameter
 		for(Tuple tuple: getDomainTuples())
 			elements += (elements.length() > 0 ? ", " : "") + tuple + " " + getValue(tuple);
 		
-		return "param " + _name + _domain + " := " + elements + ";";
+		return "param " + _name + _domain + " := " + elements + " default 0;";
 	}
 }

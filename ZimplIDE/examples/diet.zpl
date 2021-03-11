@@ -9,8 +9,8 @@ param content[Food*Nutrients] := <"Oatmeal","Energy"> 4.4,
 
 var x[Food] >= 0;
 
-minimize fobj: sum <i> in F: price[i] * x[i];
+minimize fobj: sum <i> in Food: price[i] * x[i];
 
 subto targets: forall <j> in Nutrients:
-    sum <i> in Food: content[i,j] * x[j] >= target[j];
+    sum <i> in Food: content[i,j] * x[i] >= target[j];
     

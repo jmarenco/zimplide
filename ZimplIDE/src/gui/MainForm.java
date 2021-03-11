@@ -1,6 +1,7 @@
 package gui;
 
 import process.ModelFile;
+import process.Solver;
 
 import java.awt.BorderLayout;
 
@@ -84,13 +85,16 @@ public class MainForm
 	
 	private void open()
 	{
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Zimpl models", "zpl");
-        chooser.setFileFilter(filter);
-
-        if( chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION )
+//        JFileChooser chooser = new JFileChooser();
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter("Zimpl models", "zpl");
+//        chooser.setFileFilter(filter);
+//
+//        if( chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION )
         {
-        	_zimplFile = new ModelFile(chooser.getSelectedFile().getPath());
+//        	String file = chooser.getSelectedFile().getPath();
+        	String file = "/home/jmarenco/git/zimplide/ZimplIDE/examples/diet.zpl";
+        	
+        	_zimplFile = new ModelFile(file);
         	_modelPanel.setModel(_zimplFile.getModel());
 
         	updateTitle();
@@ -119,7 +123,16 @@ public class MainForm
 	
 	private void solve()
 	{
+		// TODO: Update data from current tab
 		
+		Solver solver = new Solver(_zimplFile);
+		solver.solve();
+		
+		for(String str: solver.getOutput())
+			System.out.println(str);
+
+		for(String str: solver.getErrors())
+			System.out.println(str);
 	}
 	
 	private void updateTitle()

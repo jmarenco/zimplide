@@ -51,8 +51,12 @@ public class TextFile
 	
 	public void write(String fileName)
 	{
+		writeTemporal(fileName);
 		_fileName = fileName;
-		
+	}
+	
+	public void writeTemporal(String fileName)
+	{
 		try
 		{
 			FileOutputStream fos = new FileOutputStream(fileName);
