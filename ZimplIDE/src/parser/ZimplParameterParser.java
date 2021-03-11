@@ -25,7 +25,7 @@ public class ZimplParameterParser
 		String literals = ZimplAuxiliaryParser.literals;
 		String values = ZimplAuxiliaryParser.values;
 		
-		Pattern complete = Pattern.compile("param\\s+(\\w+)(\\[(" + literals + ")\\])?(\\s*:=\\s*" + values + "\\s*)?\\s*;");
+		Pattern complete = Pattern.compile("param\\s+(\\w+)(\\[(" + literals + ")\\])?(\\s*:=\\s*" + values + "\\s*)?\\s*(default\\s+-?\\d+(\\.\\d*)?)?;");
 		Matcher matcher = complete.matcher(_file);
 		
 		while( matcher.find() )

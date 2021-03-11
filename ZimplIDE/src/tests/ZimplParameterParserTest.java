@@ -115,6 +115,18 @@ class ZimplParameterParserTest
 		assertValue("x", -10.1, "shrek");
 		assertValue("x", -1, "fiona");
 	}
+	
+	@Test
+	void defaultValueInParam()
+	{
+		parse("stuff param x[A] := <\"shrek\"> 10.1, <fiona> 1.0 default 0; more stuff");
+
+		assertContains("x");
+		assertDomain("x", "A");
+		assertValues("x", 2);
+		assertValue("x", 10.1, "shrek");
+		assertValue("x", 1, "fiona");
+	}
 
 	@Test
 	void fillEmptyParam()
@@ -129,8 +141,8 @@ class ZimplParameterParserTest
 		_model.add(param);
 		
 		String result = fill("stuff param cost[A]; more stuff");
-		assertTrue(result.equals("stuff param cost[A] := <\"fiona\"> 12.0, <\"shrek\"> 11.0; more stuff") ||
-				   result.equals("stuff param cost[A] := <\"shrek\"> 11.0, <\"fiona\"> 12.0; more stuff"));
+		assertTrue(result.equals("stuff param cost[A] := <\"fiona\"> 12.0, <\"shrek\"> 11.0 default 0; more stuff") ||
+				   result.equals("stuff param cost[A] := <\"shrek\"> 11.0, <\"fiona\"> 12.0 default 0; more stuff"));
 	}
 
 	private void parse(String file)
